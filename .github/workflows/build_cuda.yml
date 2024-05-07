@@ -49,6 +49,9 @@ jobs:
         run: |
           set -eux
 
+          echo "This is CUDA_PATH: ${{ steps.cuda-toolkit.outputs.CUDA_PATH }}"
+
           # CUDA Toolkit へのパスを整形する
           CUDA_ROOT=$( echo "${{ steps.cuda-toolkit.outputs.CUDA_PATH }}" | tr '\\' '/' )
+
           echo "This is CUDA_ROOT: ${CUDA_ROOT}"
