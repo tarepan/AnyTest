@@ -1,0 +1,54 @@
+name: cuda
+on: workflow_dispatch
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-and-upload:
+    strategy:
+      matrix:
+        include:
+          # Windows NVIDIA GPU
+          - os: windows-2019
+            architecture: "x64"
+            voicevox_core_asset_prefix: voicevox_core-windows-x64-cuda
+            onnxruntime_url: https://github.com/microsoft/onnxruntime/releases/download/v1.13.1/onnxruntime-win-x64-gpu-1.13.1.zip
+            cuda_version: "11.8.0"
+            cudnn_url: https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/windows-x86_64/cudnn-windows-x86_64-8.9.2.26_cuda11-archive.zip
+            zlib_url: http://www.winimage.com/zLibDll/zlib123dllx64.zip
+            target: windows-nvidia
+          # Linux NVIDIA GPU
+          - os: ubuntu-20.04
+            architecture: "x64"
+            voicevox_core_asset_prefix: voicevox_core-linux-x64-gpu
+            onnxruntime_url: https://github.com/microsoft/onnxruntime/releases/download/v1.13.1/onnxruntime-linux-x64-gpu-1.13.1.tgz
+            cuda_version: "11.8.0"
+            cudnn_url: https://developer.download.nvidia.com/compute/cudnn/redist/cudnn/linux-x86_64/cudnn-linux-x86_64-8.9.2.26_cuda11-archive.tar.xz
+            target: linux-nvidia
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      # ONNX Runtime providersとCUDA周りをリンクするために使う
+      - name: Install patchelf
+        if: startsWith(matrix.os, 'ubuntu-') && endsWith(matrix.target, 'nvidia')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y patchelf
+
+      - name: Setup CUDA
+        uses: Jimver/cuda-toolkit@v0.2.10
+        id: cuda-toolkit
+        with:
+          method: network
+          cuda: ${{ matrix.cuda_version }}
+
+      - name: Extract CUDA Dynamic Libraries
+        if: matrix.cuda_version != '' && steps.cuda-dll-cache-restore.outputs.cache-hit != 'true'
+        run: |
+          set -eux
+
+          # CUDA Toolkit へのパスを整形する
+          CUDA_ROOT=$( echo "${{ steps.cuda-toolkit.outputs.CUDA_PATH }}" | tr '\\' '/' )
+          echo "This is CUDA_ROOT: ${CUDA_ROOT}"
