@@ -13,7 +13,7 @@ jobs:
 
       - name: <Setup> Prepare Python Runtime / Python Dependencies
         id: setup-common
-        uses: ./github/actions/common_setup
+        uses: ./.github/actions/common_setup
 
       - name: <Deploy> Print outputs
         run: |
@@ -28,7 +28,7 @@ jobs:
 
       - name: <Setup> Prepare Python Runtime / Python Dependencies
         id: setup-common
-        uses: ./github/actions/common_setup
+        uses: ./.github/actions/common_setup
         with:
           python: false
 
@@ -45,7 +45,7 @@ jobs:
 
       - name: <Setup> Prepare Python Runtime / Python Dependencies
         id: setup-common
-        uses: ./github/actions/common_setup
+        uses: ./.github/actions/common_setup
         with:
           requirements-suffix: "-dev"
 
