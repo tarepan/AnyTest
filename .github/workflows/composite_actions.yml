@@ -8,9 +8,6 @@ jobs:
   common-setup-default:
     runs-on: ubuntu-20.04
     steps:
-      - name: <Setup> Check out the repository
-        uses: actions/checkout@v4
-
       - name: <Setup> Prepare Python Runtime / Python Dependencies
         id: setup-common
         uses: ./.github/actions/common_setup
@@ -23,9 +20,6 @@ jobs:
   common-setup-no-python:
     runs-on: ubuntu-20.04
     steps:
-      - name: <Setup> Check out the repository
-        uses: actions/checkout@v4
-
       - name: <Setup> Prepare Python Runtime / Python Dependencies
         id: setup-common
         uses: ./.github/actions/common_setup
@@ -40,9 +34,6 @@ jobs:
   common-setup-dev-dependency:
     runs-on: ubuntu-20.04
     steps:
-      - name: <Setup> Check out the repository
-        uses: actions/checkout@v4
-
       - name: <Setup> Prepare Python Runtime / Python Dependencies
         id: setup-common
         uses: ./.github/actions/common_setup
