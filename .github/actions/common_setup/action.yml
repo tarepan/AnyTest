@@ -17,9 +17,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: <Setup> Check out the repository
-      uses: actions/checkout@v4
-
     - name: <Setup> Set up Python
       if: ${{ inputs.python == 'true' }}
       uses: actions/setup-python@v5

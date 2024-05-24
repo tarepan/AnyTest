@@ -8,9 +8,13 @@ jobs:
   common-setup-default:
     runs-on: ubuntu-20.04
     steps:
-      - name: <Setup> Prepare the repository / Python Runtime / Python Dependencies
+      - name: <Setup> Check out the repository
+        uses: actions/checkout@v4
+
+      - name: <Setup> Prepare Python Runtime / Python Dependencies
         id: setup-common
         uses: ./github/actions/common_setup
+
       - name: <Deploy> Print outputs
         run: |
           echo ${{ steps.setup-common.outputs.python-version }}
@@ -19,11 +23,15 @@ jobs:
   common-setup-no-python:
     runs-on: ubuntu-20.04
     steps:
-      - name: <Setup> Prepare the repository / Python Runtime / Python Dependencies
+      - name: <Setup> Check out the repository
+        uses: actions/checkout@v4
+
+      - name: <Setup> Prepare Python Runtime / Python Dependencies
         id: setup-common
         uses: ./github/actions/common_setup
         with:
           python: false
+
       - name: <Deploy> Print outputs
         run: |
           echo ${{ steps.setup-common.outputs.python-version }}
@@ -32,11 +40,15 @@ jobs:
   common-setup-dev-dependency:
     runs-on: ubuntu-20.04
     steps:
-      - name: <Setup> Prepare the repository / Python Runtime / Python Dependencies
+      - name: <Setup> Check out the repository
+        uses: actions/checkout@v4
+
+      - name: <Setup> Prepare Python Runtime / Python Dependencies
         id: setup-common
         uses: ./github/actions/common_setup
         with:
           requirements-suffix: "-dev"
+
       - name: <Deploy> Print outputs
         run: |
           echo ${{ steps.setup-common.outputs.python-version }}
