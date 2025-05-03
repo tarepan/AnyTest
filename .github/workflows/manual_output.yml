@@ -1,5 +1,15 @@
 name: manual output
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    outputs:
+      output1:
+        value: ${{ jobs.write-out-1.outputs.output1 }}
+      output2:
+        value: ${{ jobs.write-out-1.outputs.output2 }}
+      output3:
+        value: ${{ jobs.write-out-2.outputs.output3 }}
+      output4:
+        value: ${{ jobs.write-out-2.outputs.output4 }}
 
 jobs:
   write-out-1:
