@@ -4,12 +4,19 @@ on:
     workflows: [manual output]
     types:
       - completed
+defaults:
+  run:
+    shell: bash
 
 jobs:
   read-outputs:
     runs-on: ubuntu-latest
     steps:
       - id: step1
-        run: echo ${{github.event.workflow_run.outputs.output1}}
+        run: echo "${{ github.event.workflow_run.outputs.output1 }}"
       - id: step2
-        run: echo ${{github.event.workflow_run.outputs.output2}}
+        run: echo "${{ github.event.workflow_run.outputs.output2 }}"
+      - id: step3
+        run: echo "${{ github.event.workflow_run.outputs.output3 }}"
+      - id: step4
+        run: echo "${{ github.event.workflow_run.outputs.output4 }}"

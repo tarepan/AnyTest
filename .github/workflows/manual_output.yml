@@ -2,7 +2,7 @@ name: manual output
 on: workflow_dispatch
 
 jobs:
-  write-out:
+  write-out-1:
     runs-on: ubuntu-latest
     outputs:
       output1: ${{ steps.step1.outputs.test }}
@@ -12,3 +12,13 @@ jobs:
         run: echo "test=hello" >> "$GITHUB_OUTPUT"
       - id: step2
         run: echo "test=world" >> "$GITHUB_OUTPUT"
+  write-out-2:
+    runs-on: ubuntu-latest
+    outputs:
+      output3: ${{ steps.step3.outputs.test }}
+      output4: ${{ steps.step4.outputs.test }}
+    steps:
+      - id: step3
+        run: echo "test=helloW" >> "$GITHUB_OUTPUT"
+      - id: step4
+        run: echo "test=worldW" >> "$GITHUB_OUTPUT"
