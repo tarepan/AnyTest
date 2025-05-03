@@ -1,7 +1,7 @@
 name: successor
 on:
   workflow_run:
-    workflows: [manual_output]
+    workflows: [manual output]
     types:
       - completed
 
