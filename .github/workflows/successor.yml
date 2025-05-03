@@ -1,0 +1,15 @@
+name: successor
+on:
+  workflow_run:
+    workflows: [manual_output]
+    types:
+      - completed
+
+jobs:
+  read-outputs:
+    runs-on: ubuntu-latest
+    steps:
+      - id: step1
+        run: echo ${{github.event.workflow_run.outputs.output1}}
+      - id: step2
+        run: echo ${{github.event.workflow_run.outputs.output2}}
